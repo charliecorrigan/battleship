@@ -60,6 +60,25 @@ class TestGenerateNewGameboard < Minitest::Test
     assert_equal blank_gameboard[1]["b4"], blank_gameboard[0]["a4"].down
   end
 
+  def test_assign_all_right_attributes
+      new_gameboard = GenerateNewGameboard.new(4)
+      blank_gameboard = new_gameboard.generate_blank_gameboard
+      new_gameboard.assign_all_right_attributes(blank_gameboard)
+      assert_nil blank_gameboard[3]["d4"].right
+      assert_equal blank_gameboard[1]["b3"], blank_gameboard[1]["b2"].right
+      assert_equal blank_gameboard[0]["a2"], blank_gameboard[0]["a1"].right
+  end
+
+  def test_assign_all_left_attributes
+      new_gameboard = GenerateNewGameboard.new(4)
+      blank_gameboard = new_gameboard.generate_blank_gameboard
+      new_gameboard.assign_all_left_attributes(blank_gameboard)
+      assert_nil blank_gameboard[3]["d1"].left
+      assert_equal blank_gameboard[1]["b1"], blank_gameboard[1]["b2"].left
+      assert_equal blank_gameboard[0]["a3"], blank_gameboard[0]["a4"].left
+  end
+
+
   # def test_link_gameboard_cells_efficacy
   #   new_gameboard = GenerateNewGameboard.new(4)
   #   blank_gameboard = new_gameboard.generate_blank_gameboard

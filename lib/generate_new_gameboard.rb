@@ -33,8 +33,8 @@ class GenerateNewGameboard
   # def link_gameboard_cells(unlinked_gameboard)
   #   sequential_row_names = ("a".."z").to_a
   #   row_letters = sequential_row_names.slice(0..(size - 1))
-  #   assign_all_up_attributes(unlinked_gameboard, rows)
-  #   assign_all_down_attributes(unlinked_gameboard)
+  #   assign_all_up_attributes(unlinked_gameboard, row_letters)
+  #   assign_all_down_attributes(unlinked_gameboard, row_letters)
   #   assign_all_right_attributes(unlinked_gameboard)
   #   assign_all_left_attributes(unlinked_gameboard)
   # end
@@ -67,21 +67,33 @@ class GenerateNewGameboard
     end
   end
 
+  def assign_all_right_attributes(gameboard)
+    gameboard.each_with_index do |row, index|
+      row.keys.each do |key|
+        number = key.split("").last
+        if number.to_i < row.length
+          pointer_number = (number.to_i + 1).to_s
+          pointer = key.sub(number, pointer_number)
+          gameboard[index][key].right = gameboard[index][pointer]
+        end
+      end
+    end
+  end
+
+  def assign_all_left_attributes(gameboard)
+    gameboard.each_with_index do |row, index|
+      row.keys.each do |key|
+        number = key.split("").last
+        if number.to_i > 1
+          pointer_number = (number.to_i - 1).to_s
+          pointer = key.sub(number, pointer_number)
+          gameboard[index][key].left = gameboard[index][pointer]
+        end
+      end
+    end
+  end
 
 
-  #     #ASSIGN ALL DOWN ATTRIBUTES
-  #     if index < (size - 1)
-  #       row.keys.each do |key|
-  #         first_letter = key.split("").first
-  #         new_index = (rows.index(first_letter)) + 1
-  #         pointer_letter = rows[new_index]
-  #         #binding.pry
-  #         pointer = key.sub(first_letter, pointer_letter)
-  #         #binding.pry
-  #         unlinked_gameboard[index][key].down = unlinked_gameboard[index + 1][pointer]
-  #         #binding.pry
-  #       end
-  #     end
   #     #ASSIGN ALL RIGHT ATTRIBUTES
   #     row.keys.each do |key|
   #       number = key.split("").last
