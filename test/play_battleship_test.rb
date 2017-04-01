@@ -8,4 +8,15 @@ require './lib/play_battleship'
 
 class TestPlayBattleship < Minitest::Test
 
+  def test_it_exists
+    play = PlayBattleship.new
+    assert play
+  end
+
+  def test_get_time_stamp_saves_time
+    play = PlayBattleship.new
+    start_time = play.get_time_stamp
+    assert start_time
+    assert_equal String, start_time.class
+  end
 end
