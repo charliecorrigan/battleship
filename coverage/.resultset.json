@@ -4,14 +4,24 @@
       "/Users/ccorrigan/turing/1module/battleship/lib/game_setup_sequence.rb": [
         1,
         1,
+        1,
+        6,
+        null,
         null,
         1,
-        5,
+        6,
+        6,
+        6,
+        6,
         null,
         null,
         null,
-        null,
-        null,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
         null,
         null,
         null,
@@ -21,6 +31,6 @@
         null
       ]
     },
-    "timestamp": 1491055434
+    "timestamp": 1491057259
   }
 }
