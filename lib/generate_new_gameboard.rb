@@ -30,14 +30,14 @@ class GenerateNewGameboard
     empty_gameboard_spaces
   end
 
-  # def link_gameboard_cells(unlinked_gameboard)
-  #   sequential_row_names = ("a".."z").to_a
-  #   row_letters = sequential_row_names.slice(0..(size - 1))
-  #   assign_all_up_attributes(unlinked_gameboard, row_letters)
-  #   assign_all_down_attributes(unlinked_gameboard, row_letters)
-  #   assign_all_right_attributes(unlinked_gameboard)
-  #   assign_all_left_attributes(unlinked_gameboard)
-  # end
+  def link_gameboard_cells(unlinked_gameboard)
+    sequential_row_names = ("a".."z").to_a
+    row_letters = sequential_row_names.slice(0..(size - 1))
+    assign_all_up_attributes(unlinked_gameboard, row_letters)
+    assign_all_down_attributes(unlinked_gameboard, row_letters)
+    assign_all_right_attributes(unlinked_gameboard)
+    assign_all_left_attributes(unlinked_gameboard)
+  end
 
     def assign_all_up_attributes(gameboard, row_letters)
       gameboard.each_with_index do |row, index|
