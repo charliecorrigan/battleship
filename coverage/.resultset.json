@@ -1,28 +1,26 @@
 {
   "Unit Tests": {
     "coverage": {
-      "/Users/ccorrigan/turing/1module/battleship/lib/play_battleship.rb": [
+      "/Users/ccorrigan/turing/1module/battleship/lib/game_setup_sequence.rb": [
+        1,
         1,
         null,
         1,
-        3,
+        5,
         null,
         null,
-        1,
-        3,
-        3,
-        0,
-        0,
-        0,
         null,
         null,
-        1,
-        3,
-        3,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
         null,
         null
       ]
     },
-    "timestamp": 1491014791
+    "timestamp": 1491055434
   }
 }
