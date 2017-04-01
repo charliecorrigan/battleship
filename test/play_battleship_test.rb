@@ -19,4 +19,9 @@ class TestPlayBattleship < Minitest::Test
     assert start_time
     assert_equal String, start_time.class
   end
+
+  def test_run_game_sequences_method_runs_when_initialized
+    play = PlayBattleship.new
+    assert play.run_game_sequences
+  end
 end

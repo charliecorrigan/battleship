@@ -12,7 +12,7 @@ puts welcome_message
 puts title_screen_options
 until user_choice.downcase == play_option || user_choice.downcase == quit_option
   user_choice = gets.chomp
-  if user_choice.downcase == play_option then new_game = PlayBattleship
+  if user_choice.downcase == play_option then new_game = PlayBattleship.new
   elsif user_choice.downcase == instructions_option
     puts instructions
     puts title_screen_options
