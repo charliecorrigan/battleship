@@ -1,3 +1,5 @@
+require './lib/cell'
+
 class GenerateNewGameboard
   attr_reader :size
   def initialize(size)
