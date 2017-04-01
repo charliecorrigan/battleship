@@ -14,27 +14,27 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2017-03-31T20:46:31-06:00">2017-03-31T20:46:31-06:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2017-04-01T08:34:19-06:00">2017-04-01T08:34:19-06:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="red">75.0%</span></span>
+    (<span class="covered_percent"><span class="red">73.33%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         1.6
+         2.4
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>1</b> files in total.
-    <b>12</b> relevant lines. 
-    <span class="green"><b>9</b> lines covered</span> and
-    <span class="red"><b>3</b> lines missed </span>
+    <b>15</b> relevant lines. 
+    <span class="green"><b>11</b> lines covered</span> and
+    <span class="red"><b>4</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -51,13 +51,13 @@
     <tbody>
       
       <tr>
-        <td class="strong"><a href="#6820f1636bea21407b64bff70fdd76b678204166" class="src_link" title="lib/play_battleship.rb">lib/play_battleship.rb</a></td>
-        <td class="red strong">75.0 %</td>
-        <td>19</td>
-        <td>12</td>
-        <td>9</td>
-        <td>3</td>
-        <td>1.6</td>
+        <td class="strong"><a href="#f79c83dab09b65fc292f8036357d3c53cfea82b4" class="src_link" title="lib/game_setup_sequence.rb">lib/game_setup_sequence.rb</a></td>
+        <td class="red strong">73.33 %</td>
+        <td>27</td>
+        <td>15</td>
+        <td>11</td>
+        <td>4</td>
+        <td>2.4</td>
       </tr>
       
     </tbody>
@@ -76,14 +76,14 @@
     
       <div class="source_files">
       
-        <div class="source_table" id="6820f1636bea21407b64bff70fdd76b678204166">
+        <div class="source_table" id="f79c83dab09b65fc292f8036357d3c53cfea82b4">
   <div class="header">
-    <h3>lib/play_battleship.rb</h3>
-    <h4><span class="red">75.0 %</span> covered</h4>
+    <h3>lib/game_setup_sequence.rb</h3>
+    <h4><span class="red">73.33 %</span> covered</h4>
     <div>
-      <b>12</b> relevant lines. 
-      <span class="green"><b>9</b> lines covered</span> and
-      <span class="red"><b>3</b> lines missed.</span>
+      <b>15</b> relevant lines. 
+      <span class="green"><b>11</b> lines covered</span> and
+      <span class="red"><b>4</b> lines missed.</span>
     </div>
   </div>
   
@@ -93,25 +93,25 @@
         <li class="covered" data-hits="1" data-linenumber="1">
           <span class="hits">1</span>
           
-          <code class="ruby">class PlayBattleship</code>
+          <code class="ruby">class GameSetupSequence</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="2">
+        <li class="covered" data-hits="1" data-linenumber="2">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">  attr_reader :board_size</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="3">
           <span class="hits">1</span>
           
-          <code class="ruby">  def initialize</code>
+          <code class="ruby">  def initialize(difficulty = &quot;beginner&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="4">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="6" data-linenumber="4">
+          <span class="hits">6</span>
           
-          <code class="ruby">    run_game_sequences</code>
+          <code class="ruby">    @board_size = select_board_size(difficulty)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="5">
@@ -129,43 +129,43 @@
         <li class="covered" data-hits="1" data-linenumber="7">
           <span class="hits">1</span>
           
-          <code class="ruby">  def run_game_sequences</code>
+          <code class="ruby">  def select_board_size(difficulty)</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="8">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="6" data-linenumber="8">
+          <span class="hits">6</span>
           
-          <code class="ruby">    start_time = get_time_stamp</code>
+          <code class="ruby">    size = 4 if difficulty == &quot;beginner&quot;</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="9">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="6" data-linenumber="9">
+          <span class="hits">6</span>
           
-          <code class="ruby">    game_setup_sequence = GameSetupSequence.new</code>
+          <code class="ruby">    size = 8 if difficulty == &quot;intermediate&quot;</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="10">
+        <li class="covered" data-hits="6" data-linenumber="10">
+          <span class="hits">6</span>
           
-          
-          <code class="ruby">    game_play_sequence = GamePlaySequence.new</code>
+          <code class="ruby">    size = 12 if difficulty == &quot;advanced&quot;</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="11">
+        <li class="covered" data-hits="6" data-linenumber="11">
+          <span class="hits">6</span>
           
-          
-          <code class="ruby">    end_time = get_time_stamp</code>
+          <code class="ruby">    size</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="12">
+        <li class="never" data-hits="" data-linenumber="12">
           
           
-          <code class="ruby">    game_end_sequence = GameEndSequence.new</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="13">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="14">
@@ -177,28 +177,76 @@
         <li class="covered" data-hits="1" data-linenumber="15">
           <span class="hits">1</span>
           
-          <code class="ruby">  def get_time_stamp</code>
+          <code class="ruby">  def create_computer_gameboard</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="16">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="1" data-linenumber="16">
+          <span class="hits">1</span>
           
-          <code class="ruby">    time = Time.new</code>
+          <code class="ruby">    new_computer_gameboard = GenerateNewGameboard.new(board_size)</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="17">
-          <span class="hits">3</span>
+        <li class="missed" data-hits="0" data-linenumber="17">
           
-          <code class="ruby">    time.strftime(&quot;%H:%M:%S&quot;)</code>
+          
+          <code class="ruby">    new_game_board = new_computer_gameboard.generate_blank_gameboard</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="18">
+        <li class="missed" data-hits="0" data-linenumber="18">
+          
+          
+          <code class="ruby">    computer_fleet = GenerateFleet.new</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="19">
+          
+          
+          <code class="ruby">    ships = computer_fleet.return_ship_coordinates(&quot;computer&quot;)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="20">
+          
+          
+          <code class="ruby">    computer_gameboard.populate_gameboard_with_ships(new_game_board, ships)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="21">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="19">
+        <li class="never" data-hits="" data-linenumber="22">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="23">
+          
+          
+          <code class="ruby">  # create_player_gameboard</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="24">
+          
+          
+          <code class="ruby">  #   generate_new_gameboard</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="25">
+          
+          
+          <code class="ruby">  #   place_ships(player)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="26">
+          
+          
+          <code class="ruby">  #   update_gameboard</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="27">
           
           
           <code class="ruby">end</code>
