@@ -7,8 +7,8 @@ class TestCell < Minitest::Test
 
   def test_new_instance_initialize_values
     cell = Cell.new
-    refute cell.ship?
-    refute cell.fired_on?
+    refute cell.ship
+    refute cell.fired_on
     assert_nil cell.turn_result
     assert_nil cell.up
     assert_nil cell.down
