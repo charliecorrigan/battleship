@@ -78,4 +78,22 @@ class ShipPlacement
       cell.ship = true
     end
   end
+
+  def show_ship_placement_instructions(difficulty)
+    number_of_ships = ""
+    message = "I have laid out my ships on the grid.\nYou now need to layout your #{number_of_ships} ships.\n"
+    if difficulty == "beginner"
+      number_of_ships = "two"
+      message += "The first is two units long and the\nsecond is three units long.\n"
+    elsif difficulty == "intermediate"
+      number_of_ships = "three"
+      message += "The first is two units long, the\nsecond is three units long, and the\nthird is four units long.\n"
+    else
+      number_of_ships = "four"
+      message += "The first is two units long, the\nsecond is three units long, the\nthird is four units long, and\nthe fouth is five units long.\n"
+    end
+    message +="The grid has A1 at the top left and D4 at the bottom right."
+    puts message
+    message
+  end
 end
