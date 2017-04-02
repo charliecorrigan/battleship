@@ -15,13 +15,22 @@ class TestGameSetupSequence < Minitest::Test
     assert_equal 4, new_setup.board_size
   end
 
-  def test_difficulty_can_be_specified_and_changed_on_initialization
+  def test_board_size_is_effected_by_diffiulty
     new_setup = GameSetupSequence.new("beginner")
     assert_equal 4, new_setup.board_size
     new_setup = GameSetupSequence.new("intermediate")
     assert_equal 8, new_setup.board_size
     new_setup = GameSetupSequence.new("advanced")
     assert_equal 12, new_setup.board_size
+  end
+
+  def test_ship_quantity_is_effected_by_diffiulty
+    new_setup = GameSetupSequence.new("beginner")
+    assert_equal [2, 3], new_setup.ship_quantity
+    new_setup = GameSetupSequence.new("intermediate")
+    assert_equal [2, 3, 4], new_setup.ship_quantity
+    new_setup = GameSetupSequence.new("advanced")
+    assert_equal [2, 3, 4, 5], new_setup.ship_quantity
   end
 
   def test_create_computer_gameboard_return_values
