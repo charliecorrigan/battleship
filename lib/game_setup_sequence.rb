@@ -2,10 +2,11 @@ require './lib/generate_new_gameboard'
 require './lib/ship_placement'
 
 class GameSetupSequence
-  attr_reader :board_size, :ship_quantity
+  attr_reader :board_size, :ships_in_play
   def initialize(difficulty = "beginner")
     @board_size = select_board_size(difficulty)
-    @ship_quantity = select_ship_quantity(difficulty)
+    @ships_in_play = select_ships_in_play(difficulty)
+    @ship_quantity = ships_in_play.length
   end
 
   def select_board_size(difficulty)
@@ -15,7 +16,7 @@ class GameSetupSequence
     size
   end
 
-  def select_ship_quantity(difficulty)
+  def select_ships_in_play(difficulty)
     ships = [2, 3] if difficulty == "beginner"
     ships = [2, 3, 4] if difficulty == "intermediate"
     ships = [2, 3, 4, 5] if difficulty == "advanced"
@@ -26,11 +27,12 @@ class GameSetupSequence
     new_computer_gameboard = GenerateNewGameboard.new(board_size)
     computer_gameboard = new_computer_gameboard.generate_blank_gameboard
     new_computer_gameboard.link_gameboard_cells(computer_gameboard)
-    computer_ship_placement = ShipPlacement.new(ship_quantity)
-    computer_ship_placement.place_ships(computer_gameboard, ship_quantity, board_size)
-    # computer_ship_placement.assign_ship_coordinates("computer")
-    # computer_gameboard = new_computer_gameboard.populate_gameboard_with_ships(new_game_board, ships)
-    # computer_gameboard
+    computer_ship_placement = ShipPlacement.new(ships_in_play)
+    ships_in_play.each do |this_ship|
+      ship_coordinates = computer_ship_placement.computer_selects_ship_placement(computer_gameboard, board_size, this_ship)
+      computer_ship_placement.place_ship_on_board(ship_coordinates)
+    end
+    computer_gameboard
   end
 
   # create_player_gameboard
