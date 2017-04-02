@@ -99,4 +99,15 @@ class TestShipPlacement < Minitest::Test
     end
     assert_equal 5, counter
   end
+
+  def test_show_ship_placement_instructions
+    new_gameboard = GenerateNewGameboard.new(4)
+    blank_gameboard = new_gameboard.generate_blank_gameboard
+    new_gameboard.link_gameboard_cells(blank_gameboard)
+    ship_placement = ShipPlacement.new([2, 3])
+    message = show_ship_placement_instructions("beginner")
+    assert_equal "I have laid out my ships on the grid.\nYou now need to layout your two ships.\n
+                  The first is two units long and the\nsecond is three units long.n\
+                  The grid has A1 at the top left and D4 at the bottom right.", message
+  end
 end
