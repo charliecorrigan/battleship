@@ -66,49 +66,27 @@ class ShipPlacement
   def find_valid_random_direction(first_coordinate, ship_size)
     valid = false
     until valid
-      puts "entering the until loop"
       ship_coordinates = [first_coordinate]
-      puts "first_coordinate is #{first_coordinate.name}"
       current_cell = first_coordinate
       direction = select_random_direction
-      puts "direction is #{direction}"
       next_cell = find_next_cell(current_cell, direction)
-      if next_cell.nil?
-        puts "next cell is nil"
-      else
-        puts "next_cell is #{next_cell.name}"
-      end
-      puts "ship size minus 1 is #{(ship_size - 1)}"
-      counter = 0
       (ship_size - 1).times do
-        counter += 1
-        puts "do times counter is #{counter}"
         if next_cell.nil?
-          puts "next_cell cell was nil. About to escape. We should reenter the loop"
           valid = false
           break
         else
-          puts "next_cell wasn't nil'"
           valid = true
           current_cell = next_cell
           ship_coordinates << current_cell
-          puts "first ship_coordinates are currently #{ship_coordinates[0].name}"
-          puts "last ship_coordinates are currently #{ship_coordinates[-1].name}"
         end
       end
     end
-    #binding.pry
-    message = ""
-    ship_coordinates.each do |cell|
-      message << cell.name
-    end
-    puts "Ship coordinates at end of method are #{message}"
     ship_coordinates
   end
 
-  # def computer_selects_ship_placement(gameboard, size, ship_size)
-  #   first_coordinate = select_random_coordinate(gameboard, size)
-  #   ship_coordinates = find_valid_random_direction(first_coordinate)
-  #   
-  # end
+  def computer_selects_ship_placement(gameboard, size, ship_size)
+    first_coordinate = select_random_coordinate(gameboard, size)
+    ship_coordinates = find_valid_random_direction(first_coordinate, ship_size)
+    ship_coordinates
+  end
 end

@@ -39,7 +39,7 @@ class TestShipPlacement < Minitest::Test
     assert_equal blank_gameboard[0]["a2"], ship_placement.find_next_cell(blank_gameboard[0]["a1"], "right")
   end
 
-  def test_find_valid_random_direction
+  def test_find_valid_random_direction_output
     new_gameboard = GenerateNewGameboard.new(4)
     blank_gameboard = new_gameboard.generate_blank_gameboard
     new_gameboard.link_gameboard_cells(blank_gameboard)
@@ -52,17 +52,30 @@ class TestShipPlacement < Minitest::Test
   end
 
   def test_computer_selects_ship_placement
-    skip
     new_gameboard = GenerateNewGameboard.new(4)
     blank_gameboard = new_gameboard.generate_blank_gameboard
     new_gameboard.link_gameboard_cells(blank_gameboard)
     size = new_gameboard.size
     ship_placement = ShipPlacement.new([2, 3])
-    ship_size = @ships[0]
+    ship_size = 2
     ship_coordinates = ship_placement.computer_selects_ship_placement(blank_gameboard, size, ship_size)
     assert_instance_of Array, ship_coordinates
     assert_equal ship_size, ship_coordinates.length
     assert_instance_of Cell, ship_coordinates.first
     assert_instance_of Cell, ship_coordinates.last
   end
+
+  def test_place_ship_on_board
+    new_gameboard = GenerateNewGameboard.new(4)
+    blank_gameboard = new_gameboard.generate_blank_gameboard
+    new_gameboard.link_gameboard_cells(blank_gameboard)
+    size = new_gameboard.size
+    ship_placement = ShipPlacement.new([2, 3])
+    ship_size = 2
+    ship_coordinates = ship_placement.computer_selects_ship_placement(blank_gameboard, size, ship_size)
+    ship_placement.place_ship_on_board(ship_coordinates)
+    assert ship_coordinates.first.ship
+    assert ship_coordinates.last.ship
+  end
+
 end
