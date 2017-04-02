@@ -96,4 +96,14 @@ class ShipPlacement
     puts message
     message
   end
+
+  def player_selects_ship_placement(gameboard, ship_size)
+      ship_coordinates = []
+      while ship_coordinates.empty?
+        player_input = solicit_user_input(ship_size)
+        ship_coordinates = validate_player_coordinates(gameboard)
+      end
+      ship_coordinates
+  end
+
 end

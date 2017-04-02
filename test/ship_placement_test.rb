@@ -116,7 +116,7 @@ class TestShipPlacement < Minitest::Test
     new_gameboard.link_gameboard_cells(blank_gameboard)
     ship_placement = ShipPlacement.new([2, 3])
     ship_size = 2
-    ship_coordinates = player_ship_placement.player_selects_ship_placement(blank_gameboard, ship_size)
+    ship_coordinates = ship_placement.player_selects_ship_placement(blank_gameboard, ship_size)
     assert_instance_of Array, ship_coordinates
     assert_equal ship_size, ship_coordinates.length
     assert_instance_of Cell, ship_coordinates.first
