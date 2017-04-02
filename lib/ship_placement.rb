@@ -34,9 +34,20 @@ class ShipPlacement
     direction
   end
 
-  def computer_selects_ship_placement(gameboard, size, ship_size)
-    first_coordinate = select_random_coordinate(gameboard, size)
-    remaining_coordinates = find_valid_random_direction
-    ship_coordinates = [first_coordinate].merge(remaining_coordinates)
+  def next_cell(current_cell, direction)
+    if direction == "up"
+      current_cell.up
+    elsif direction == "down"
+      current_cell.down
+    elsif direction == "right"
+      current_cell.right
+    else
+      current_cell.left
+    end
   end
+  # def computer_selects_ship_placement(gameboard, size, ship_size)
+  #   first_coordinate = select_random_coordinate(gameboard, size)
+  #   remaining_coordinates = find_valid_random_direction
+  #   ship_coordinates = [first_coordinate].merge(remaining_coordinates)
+  # end
 end
