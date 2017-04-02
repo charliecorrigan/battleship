@@ -29,6 +29,19 @@ class TestShipPlacement < Minitest::Test
     output = ship_placement.select_random_direction
     assert_instance_of String, output
     assert output == "up" || output == "down" || output == "right" || output == "left"
-      
+  end
+
+  def test_computer_selects_ship_placement
+    new_gameboard = GenerateNewGameboard.new(4)
+    blank_gameboard = new_gameboard.generate_blank_gameboard
+    new_gameboard.link_gameboard_cells(blank_gameboard)
+    size = new_gameboard.size
+    ship_placement = ShipPlacement.new([2, 3])
+    ship_size = @ships[0]
+    ship_coordinates = ship_placement.computer_selects_ship_placement(blank_gameboard, size, ship_size)
+    assert_instance_of Array, ship_coordinates
+    assert_equal ship_size, ship_coordinates.length
+    assert_instance_of Cell, ship_coordinates.first
+    assert_instance_of Cell, ship_coordinates.last
   end
 end
