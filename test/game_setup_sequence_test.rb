@@ -26,11 +26,11 @@ class TestGameSetupSequence < Minitest::Test
 
   def test_ship_quantity_is_effected_by_diffiulty
     new_setup = GameSetupSequence.new("beginner")
-    assert_equal [2, 3], new_setup.ship_quantity
+    assert_equal [2, 3], new_setup.ships_in_play
     new_setup = GameSetupSequence.new("intermediate")
-    assert_equal [2, 3, 4], new_setup.ship_quantity
+    assert_equal [2, 3, 4], new_setup.ships_in_play
     new_setup = GameSetupSequence.new("advanced")
-    assert_equal [2, 3, 4, 5], new_setup.ship_quantity
+    assert_equal [2, 3, 4, 5], new_setup.ships_in_play
   end
 
   def test_create_computer_gameboard_return_values
@@ -38,6 +38,15 @@ class TestGameSetupSequence < Minitest::Test
     computer_gameboard = new_setup.create_computer_gameboard
     assert_equal Array, computer_gameboard.class
     assert_equal 4, computer_gameboard.length
-    assert_equal Hash, computer_gameboard[0].class
+    
+    counter = 0
+    computer_gameboard.each do |row|
+      row.each do |cell|
+        if cell.ship == true
+          counter += 1
+        end
+      end
+    end
+    assert_equal 5, counter
   end
 end

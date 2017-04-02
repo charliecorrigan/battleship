@@ -21,7 +21,7 @@ class ShipPlacement
   end
 
   def select_random_direction
-    value = rand(3)
+    value = rand(4)
     if value == 0
       direction = "up"
     elsif value == 1
@@ -34,9 +34,48 @@ class ShipPlacement
     direction
   end
 
+  def find_next_cell(current_cell, direction)
+    if direction == "up"
+      current_cell.up
+    elsif direction == "down"
+      current_cell.down
+    elsif direction == "right"
+      current_cell.right
+    else
+      current_cell.left
+    end
+  end
+
+  def find_valid_random_direction(first_coordinate, ship_size)
+    valid = false
+    until valid
+      ship_coordinates = [first_coordinate]
+      current_cell = first_coordinate
+      direction = select_random_direction
+      (ship_size - 1).times do
+        next_cell = find_next_cell(current_cell, direction)
+        if next_cell.nil? || next_cell.ship == true
+          valid = false
+          break
+        else
+          valid = true
+          current_cell = next_cell
+          ship_coordinates << current_cell
+        end
+      end
+    end
+    ship_coordinates
+  end
+
   def computer_selects_ship_placement(gameboard, size, ship_size)
     first_coordinate = select_random_coordinate(gameboard, size)
-    remaining_coordinates = find_valid_random_direction
-    ship_coordinates = [first_coordinate].merge(remaining_coordinates)
+    ship_coordinates = find_valid_random_direction(first_coordinate, ship_size)
+    ship_coordinates
+  end
+
+  def place_ship_on_board(ship_coordinates)
+    ship_coordinates.each do |cell|
+      cell.ship = true
+    end
   end
 end
