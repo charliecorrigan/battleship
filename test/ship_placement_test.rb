@@ -125,6 +125,7 @@ class TestShipPlacement < Minitest::Test
   end
 
   def test_solicit_user_input_return_values
+    skip
     ship_placement = ShipPlacement.new([2, 3])
     ship_size = 2
     user_input = ship_placement.solicit_user_input(ship_size)
@@ -132,12 +133,15 @@ class TestShipPlacement < Minitest::Test
   end
 
   def test_user_input_contains_cell_names
+    new_gameboard = GenerateNewGameboard.new(4)
+    blank_gameboard = new_gameboard.generate_blank_gameboard
+    new_gameboard.link_gameboard_cells(blank_gameboard)
     ship_placement = ShipPlacement.new([2, 3])
+    ship_size = 2
+    possible_keys = ship_placement.list_possible_keys(blank_gameboard)
     user_input = "A2 A3"
-    assert user_input_contains_cell_names(user_input)
-    user_input = "!"
-    refute user_input_contains_cell_names(user_input)
-    user_input = "G1 H6"
-    refute user_input_contains_cell_names(user_input)
+    assert ship_placement.user_input_contains_cell_names(user_input, possible_keys, ship_size)
+    user_input = "A2!"
+    refute ship_placement.user_input_contains_cell_names(user_input, possible_keys, ship_size)
   end
 end

@@ -116,4 +116,25 @@ class ShipPlacement
     user_input = gets.chomp
     user_input
   end
+
+  def list_possible_keys(gameboard)
+    possible_keys = []
+    gameboard.each do |row|
+      row.each do |cell|
+        possible_keys << cell[1].name
+      end
+    end
+    possible_keys
+  end
+
+  def user_input_contains_cell_names(user_input, possible_keys, ship_size)
+    split_user_input = user_input.downcase.split
+    contain_cell_names = split_user_input.all? do |input|
+      possible_keys.include?(input)
+    end
+    if contain_cell_names != true
+      puts "Error: That square name doesn't exist."
+    end
+    contain_cell_names
+  end
 end
