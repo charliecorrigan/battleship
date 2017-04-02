@@ -31,12 +31,24 @@ class TestShipPlacement < Minitest::Test
     assert output == "up" || output == "down" || output == "right" || output == "left"
   end
 
-  def test_next_cell_points_in_direction_given
+  def test_find_next_cell_points_in_direction_given
     new_gameboard = GenerateNewGameboard.new(4)
     blank_gameboard = new_gameboard.generate_blank_gameboard
     new_gameboard.link_gameboard_cells(blank_gameboard)
     ship_placement = ShipPlacement.new([2, 3])
-    assert_equal blank_gameboard[0]["a2"], ship_placement.next_cell(blank_gameboard[0]["a1"], "right")
+    assert_equal blank_gameboard[0]["a2"], ship_placement.find_next_cell(blank_gameboard[0]["a1"], "right")
+  end
+
+  def test_find_valid_random_direction
+    new_gameboard = GenerateNewGameboard.new(4)
+    blank_gameboard = new_gameboard.generate_blank_gameboard
+    new_gameboard.link_gameboard_cells(blank_gameboard)
+    ship_placement = ShipPlacement.new([2, 3])
+    first_coordinate = blank_gameboard[0]["a1"]
+    ship_size = 2
+    ship_coordinates = ship_placement.find_valid_random_direction(first_coordinate, ship_size)
+    assert_equal 2, ship_coordinates.length
+    assert_equal Cell, ship_coordinates.first.class
   end
 
   def test_computer_selects_ship_placement
