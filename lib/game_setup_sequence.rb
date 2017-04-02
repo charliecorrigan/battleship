@@ -35,8 +35,15 @@ class GameSetupSequence
     computer_gameboard
   end
 
-  # create_player_gameboard
-  #   generate_new_gameboard
-  #   place_ships(player)
-  #   update_gameboard
+  def create_player_gameboard
+    new_player_gameboard = GenerateNewGameboard.new(board_size)
+    player_gameboard = new_player_gameboard.generate_blank_gameboard
+    new_player_gameboard.link_gameboard_cells(player_gameboard)
+    player_ship_placement = ShipPlacement.new(ships_in_play)
+    player_ship_placement.show_ship_placement_instructions #just a puts message to explain how ship placement works. Doesn't ask for coordinates yet
+    ships_in_play.each do |this_ship|
+      ship_coordinates = player_ship_placement.player_selects_ship_placement
+      player_ship_placement.place_ship_on_board(ship_coordinates)
+    end
+  end
 end
