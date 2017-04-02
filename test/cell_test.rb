@@ -6,7 +6,8 @@ require './lib/cell'
 class TestCell < Minitest::Test
 
   def test_new_instance_initialize_values
-    cell = Cell.new
+    cell = Cell.new("a1")
+    assert_equal "a1", cell.name
     refute cell.ship
     refute cell.fired_on
     assert_nil cell.turn_result

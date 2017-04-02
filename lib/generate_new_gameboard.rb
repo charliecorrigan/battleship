@@ -12,7 +12,7 @@ class GenerateNewGameboard
     blank_gameboard = gameboard_spaces.map do |letter_array|
       row = {} 
       letter_array.each do |cell_name|
-        row[cell_name] = Cell.new
+        row[cell_name] = Cell.new(cell_name)
       end
       row
     end
