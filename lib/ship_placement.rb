@@ -1,3 +1,5 @@
+require 'pry'
+
 class ShipPlacement
   attr_reader :ships
 
@@ -6,11 +8,35 @@ class ShipPlacement
   end
 
   def select_random_coordinate(gameboard, size)
-    board_index = rand(3)
-    key_index = rand(3)
-    gameboard[board_index].keys[2]
+    valid = false
+    until valid
+      board_index = rand(size)
+      key_index = rand(size)
+      key = gameboard[board_index].keys[key_index]
+      if gameboard[board_index][key].ship == false
+        valid = true
+      end
+    end
+    gameboard[board_index][key]
   end
 
-  
+  def select_random_direction
+    value = rand(3)
+    if value == 0
+      direction = "up"
+    elsif value == 1
+      direction = "down"
+    elsif value == 2
+      direction = "right"
+    else
+      direction = "left"
+    end
+    direction
+  end
 
+  def computer_selects_ship_placement(gameboard, size, ship_size)
+    first_coordinate = select_random_coordinate(gameboard, size)
+    remaining_coordinates = find_valid_random_direction
+    ship_coordinates = [first_coordinate].merge(remaining_coordinates)
+  end
 end

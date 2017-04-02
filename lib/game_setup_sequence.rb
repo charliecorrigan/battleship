@@ -26,7 +26,8 @@ class GameSetupSequence
     new_computer_gameboard = GenerateNewGameboard.new(board_size)
     computer_gameboard = new_computer_gameboard.generate_blank_gameboard
     new_computer_gameboard.link_gameboard_cells(computer_gameboard)
-    computer_ship_placement = ShipPlacement.new
+    computer_ship_placement = ShipPlacement.new(ship_quantity)
+    computer_ship_placement.place_ships(computer_gameboard, ship_quantity, board_size)
     # computer_ship_placement.assign_ship_coordinates("computer")
     # computer_gameboard = new_computer_gameboard.populate_gameboard_with_ships(new_game_board, ships)
     # computer_gameboard
