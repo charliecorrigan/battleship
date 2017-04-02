@@ -111,6 +111,7 @@ class TestShipPlacement < Minitest::Test
   end
 
   def test_player_selects_ship_placement_return_values
+    skip
     new_gameboard = GenerateNewGameboard.new(4)
     blank_gameboard = new_gameboard.generate_blank_gameboard
     new_gameboard.link_gameboard_cells(blank_gameboard)
@@ -121,5 +122,22 @@ class TestShipPlacement < Minitest::Test
     assert_equal ship_size, ship_coordinates.length
     assert_instance_of Cell, ship_coordinates.first
     assert_instance_of Cell, ship_coordinates.last
+  end
+
+  def test_solicit_user_input_return_values
+    ship_placement = ShipPlacement.new([2, 3])
+    ship_size = 2
+    user_input = ship_placement.solicit_user_input(ship_size)
+    assert_equal String, user_input.class
+  end
+
+  def test_user_input_contains_cell_names
+    ship_placement = ShipPlacement.new([2, 3])
+    user_input = "A2 A3"
+    assert user_input_contains_cell_names(user_input)
+    user_input = "!"
+    refute user_input_contains_cell_names(user_input)
+    user_input = "G1 H6"
+    refute user_input_contains_cell_names(user_input)
   end
 end

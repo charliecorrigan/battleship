@@ -97,13 +97,23 @@ class ShipPlacement
     message
   end
 
-  def player_selects_ship_placement(gameboard, ship_size)
-      ship_coordinates = []
-      while ship_coordinates.empty?
-        player_input = solicit_user_input(ship_size)
-        ship_coordinates = validate_player_coordinates(gameboard)
-      end
-      ship_coordinates
-  end
+  # def player_selects_ship_placement(gameboard, ship_size)
+  #     ship_coordinates = []
+  #     while ship_coordinates.empty?
+  #       player_input = solicit_user_input(ship_size)
+  #       ship_coordinates = validate_player_coordinates(gameboard, player_input)
+  #     end
+  #     ship_coordinates
+  # end
 
+  def solicit_user_input(ship_size)
+    units = "two" if ship_size == 2
+    units = "three" if ship_size == 3
+    units = "four" if ship_size == 4
+    units = "five" if ship_size == 5
+    message = "Enter the squares for the #{units}-unit ship."
+    puts message
+    user_input = gets.chomp
+    user_input
+  end
 end
