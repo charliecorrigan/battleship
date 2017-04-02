@@ -42,7 +42,24 @@ class TestGameSetupSequence < Minitest::Test
     counter = 0
     computer_gameboard.each do |row|
       row.each do |cell|
-        if cell.ship == true
+        if cell[1].ship == true
+          counter += 1
+        end
+      end
+    end
+    assert_equal 5, counter
+  end
+
+  def test_create_player_gameboard_return_values
+    new_setup = GameSetupSequence.new("beginner")
+    player_gameboard = new_setup.create_player_gameboard
+    assert_equal Array, player_gameboard.class
+    assert_equal 4, player_gameboard.length
+    
+    counter = 0
+    player_gameboard.each do |row|
+      row.each do |cell|
+        if cell[1].ship == true
           counter += 1
         end
       end
