@@ -98,10 +98,13 @@ class ShipPlacement
   end
 
   # def player_selects_ship_placement(gameboard, ship_size)
-  #     ship_coordinates = []
-  #     while ship_coordinates.empty?
+  #     possible_keys = list_possible_keys(gameboard)
+  #     ship_coordinates = nil
+  #     while ship_coordinates.nil?
   #       player_input = solicit_user_input(ship_size)
-  #       ship_coordinates = validate_player_coordinates(gameboard, player_input)
+  #         if user_input_contains_cell_names(player_input, possible_keys)
+  #           ship_coordinates = validate_player_coordinates(gameboard, player_input)
+  #         end
   #     end
   #     ship_coordinates
   # end
@@ -127,7 +130,7 @@ class ShipPlacement
     possible_keys
   end
 
-  def user_input_contains_cell_names(user_input, possible_keys, ship_size)
+  def user_input_contains_cell_names(user_input, possible_keys)
     split_user_input = user_input.downcase.split
     contain_cell_names = split_user_input.all? do |input|
       possible_keys.include?(input)
@@ -136,5 +139,80 @@ class ShipPlacement
       puts "Error: That square name doesn't exist."
     end
     contain_cell_names
+  end
+
+
+  def player_input_rows(coordinates)
+    coordinate_rows = coordinates.map do |coordinate|
+        coordinate[0]
+      end
+    coordinate_rows  
+  end
+
+  def player_input_columns(coordinates)
+    coordinate_columns = coordinates.map do |coordinate|
+        coordinate[1]
+      end
+    coordinate_columns
+  end
+
+  def player_input_rows_as_numbers(coordinates)
+    coordinate_rows_as_numbers = coordinates.map do |row|
+        row = 1 if row == "a"
+        row = 2 if row == "b"
+        row = 3 if row == "c"
+        row = 4 if row == "d"
+        row
+      end
+    coordinate_rows_as_numbers
+  end
+
+  def validate_player_coordinates(gameboard, player_input, ship_size)
+      individual_coordinates = player_input.downcase.split
+      coordinate_rows = player_input_rows(individual_coordinates)
+      coordinate_columns = player_input_columns(individual_coordinates)
+      coordinate_rows_as_numbers = player_input_rows_as_numbers(coordinate_rows)
+      
+      if coordinate_rows.uniq.length > 1 && coordinate_columns.uniq.length > 1
+        puts "Ships cannot be placed diagonally."
+        return
+      end
+      if coordinate_rows.uniq.length == 1
+        spread = coordinate_columns[0].to_i - coordinate_columns[-1].to_i
+        if (spread.abs + 1) != ship_size
+          puts "Ship doesn't fit in squares provided."
+          return
+        else
+          if spread < 0
+            direction = "right"
+          else
+            direction = "left"
+          end
+        end
+      end
+      if coordinate_columns.uniq.length == 1
+        spread = coordinate_rows_as_numbers[0] - coordinate_rows_as_numbers[-1]
+        if (spread.abs + 1) != ship_size
+          puts "Ship doesn't fit in squares provided."
+          return
+        else
+          if spread < 0
+            direction = "down"
+          else
+            direction = "up"
+          end
+        end
+      end
+      
+        current_cell = gameboard[(coordinate_rows_as_numbers[0] - 1)][(individual_coordinates[0])]
+        
+        ship_coordinates = [current_cell]
+        
+        (ship_size - 1).times do
+          next_cell = find_next_cell(current_cell, direction)
+          ship_coordinates << next_cell
+          current_cell = next_cell
+        end
+        ship_coordinates
   end
 end
