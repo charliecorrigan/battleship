@@ -1,7 +1,4 @@
-require 'pry'
-
 class DisplayBoard
-  
   attr_accessor :current_board
 
   def initialize(working_gameboard)
@@ -18,7 +15,7 @@ class DisplayBoard
   end
 
   def generate_border(working_gameboard_size)
-    @current_board << ("=" * (working_gameboard_size * 2 + 1))
+    @current_board << ("=" * (working_gameboard_size * 2 + 2))
   end
 
   def generate_column_headers(working_gameboard_size)
@@ -26,7 +23,7 @@ class DisplayBoard
     (1..working_gameboard_size).each do |num|
       column_headers += " #{num.to_s}"
     end
-    @current_board << column_headers
+    @current_board << column_headers + " "
   end
 
   def generate_table_body(working_gameboard_size)
@@ -34,7 +31,7 @@ class DisplayBoard
     counter = working_gameboard_size
     row_name = "A"
     until counter < 1
-      table_body << "#{row_name}".ljust(working_gameboard_size * 2)
+      table_body << "#{row_name}".ljust(working_gameboard_size * 2 + 2)
       row_name = row_name.next
       counter -= 1
     end
@@ -42,13 +39,17 @@ class DisplayBoard
       @current_board << row
     end
   end
-  # def add_row(working_gameboard_size, row_name = "A", table_body = [], counter)
-  #   if counter == 0
-  #     return table_body
-  #   else
-  #     table_body << "#{row_name}".ljust(working_gameboard_size * 2)
-  #     add_row(working_gameboard_size, row_name.next, table_body, (counter - 1))
-  #   end
-  # end
 
+  def update(cell_name, result)
+    cell_info = cell_name.split("")
+    first_display_index = (cell_info[0].upcase.ord - 63)
+    second_display_index = cell_info[1].to_i * 2
+    @current_board[first_display_index][second_display_index] = result[0].upcase
+  end
+
+  def display
+    current_board.each do |row|
+      p row
+    end
+  end
 end
