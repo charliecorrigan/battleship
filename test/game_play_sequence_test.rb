@@ -13,4 +13,8 @@ class TestGamePlaySequence < Minitest::Test
     game_play_sequence = GamePlaySequence.new(player_gameboard, computer_gameboard)
     assert game_play_sequence
   end
+
+  def test_take_turns_playing
+    #NOT SURE HOW TO TEST YET
+  end
 end
