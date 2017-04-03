@@ -1,3 +1,5 @@
+require './lib/game_setup_sequence'
+
 class PlayBattleship
 
   def initialize
@@ -7,9 +9,11 @@ class PlayBattleship
   def run_game_sequences
     start_time = get_time_stamp
     game_setup_sequence = GameSetupSequence.new
-    game_play_sequence = GamePlaySequence.new
-    end_time = get_time_stamp
-    game_end_sequence = GameEndSequence.new
+    game_setup_sequence.create_computer_gameboard
+    game_setup_sequence.create_player_gameboard
+    # game_play_sequence = GamePlaySequence.new
+    # end_time = get_time_stamp
+    # game_end_sequence = GameEndSequence.new
   end
 
   def get_time_stamp
