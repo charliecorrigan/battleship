@@ -1,9 +1,11 @@
 require './lib/generate_new_gameboard'
 require './lib/ship_placement'
+require 'pry'
 
 class GameSetupSequence
-  attr_reader :board_size, :ships_in_play
+  attr_reader :difficulty, :board_size, :ships_in_play
   def initialize(difficulty = "beginner")
+    @difficulty = difficulty
     @board_size = select_board_size(difficulty)
     @ships_in_play = select_ships_in_play(difficulty)
     @ship_quantity = ships_in_play.length
@@ -40,10 +42,11 @@ class GameSetupSequence
     player_gameboard = new_player_gameboard.generate_blank_gameboard
     new_player_gameboard.link_gameboard_cells(player_gameboard)
     player_ship_placement = ShipPlacement.new(ships_in_play)
-    player_ship_placement.show_ship_placement_instructions 
+    player_ship_placement.show_ship_placement_instructions(difficulty)
     ships_in_play.each do |this_ship|
       ship_coordinates = player_ship_placement.player_selects_ship_placement(player_gameboard, this_ship)
       player_ship_placement.place_ship_on_board(ship_coordinates)
     end
+    player_gameboard
   end
 end

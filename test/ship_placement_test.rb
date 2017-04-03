@@ -111,7 +111,6 @@ class TestShipPlacement < Minitest::Test
   end
 
   def test_player_selects_ship_placement_return_values
-    skip
     new_gameboard = GenerateNewGameboard.new(4)
     blank_gameboard = new_gameboard.generate_blank_gameboard
     new_gameboard.link_gameboard_cells(blank_gameboard)

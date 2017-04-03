@@ -97,17 +97,17 @@ class ShipPlacement
     message
   end
 
-  # def player_selects_ship_placement(gameboard, ship_size)
-  #     possible_keys = list_possible_keys(gameboard)
-  #     ship_coordinates = nil
-  #     while ship_coordinates.nil?
-  #       player_input = solicit_user_input(ship_size)
-  #         if user_input_contains_cell_names(player_input, possible_keys)
-  #           ship_coordinates = validate_player_coordinates(gameboard, player_input)
-  #         end
-  #     end
-  #     ship_coordinates
-  # end
+  def player_selects_ship_placement(gameboard, ship_size)
+      possible_keys = list_possible_keys(gameboard)
+      ship_coordinates = nil
+      while ship_coordinates.nil?
+        player_input = solicit_user_input(ship_size)
+          if user_input_contains_cell_names(player_input, possible_keys)
+            ship_coordinates = validate_player_coordinates(gameboard, player_input, ship_size)
+          end
+      end
+      ship_coordinates
+  end
 
   def solicit_user_input(ship_size)
     units = "two" if ship_size == 2
@@ -205,13 +205,23 @@ class ShipPlacement
       end
       
         current_cell = gameboard[(coordinate_rows_as_numbers[0] - 1)][(individual_coordinates[0])]
-        
+        if current_cell.ship
+          puts "Error: Ships cannot overlap."
+          return
+        end
         ship_coordinates = [current_cell]
         
         (ship_size - 1).times do
           next_cell = find_next_cell(current_cell, direction)
-          ship_coordinates << next_cell
-          current_cell = next_cell
+          
+          if next_cell.ship 
+            puts "Error: Ships cannot overlap."
+            ship_coordinates = nil
+            return
+          else
+            ship_coordinates << next_cell
+            current_cell = next_cell
+          end
         end
         ship_coordinates
   end

@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/game_setup_sequence'
+require 'pry'
 
 
 class TestGameSetupSequence < Minitest::Test
@@ -54,6 +55,7 @@ class TestGameSetupSequence < Minitest::Test
     new_setup = GameSetupSequence.new("beginner")
     player_gameboard = new_setup.create_player_gameboard
     assert_equal Array, player_gameboard.class
+    
     assert_equal 4, player_gameboard.length
     
     counter = 0
