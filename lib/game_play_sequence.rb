@@ -1,6 +1,8 @@
 class GamePlaySequence
+  attr_accessor :unsunk_ships
 
-  def initialize(player_gameboard, computer_gameboard)
+  def initialize(player_gameboard, computer_gameboard, computer_fleet)
+    @unsunk_ships = computer_fleet
     run_game_play_sequence(player_gameboard, computer_gameboard)
   end
 
@@ -14,7 +16,7 @@ class GamePlaySequence
     computer = Computer.new
     winner = nil
     until winner
-      winner = player_one.player_takes_a_turn(computer_gameboard, player_one_display_board)
+      winner = player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
       winner = computer.computer_takes_a_turn(player_gameboard)
     end
   end
