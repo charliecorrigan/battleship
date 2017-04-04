@@ -3,7 +3,7 @@ class PlayerOne
 
   def player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
     winner = false
-    puts "\n\n\n\n\n\n\nYour turn, Player One!\n\n\n\n\n"
+    puts "\n\n\n\n\n\n\nYour turn, Player One!\n"
     player_one_display_board.display
     player_guess = get_valid_player_input(computer_gameboard)
     result = calculate_result(computer_gameboard, player_guess)
@@ -79,7 +79,7 @@ class PlayerOne
   end
 
   def display_result(result)
-    puts "\n\n\n\n\nIt was a #{result}!"
+    puts "\nIt was a #{result}!"
   end
 
   def check_on_fleet(unsunk_ships, computer_gameboard)

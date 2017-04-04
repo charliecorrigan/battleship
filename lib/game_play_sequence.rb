@@ -1,28 +1,43 @@
+require './lib/player_one'
+require './lib/computer'
+require './lib/display_board'
+
 class GamePlaySequence
-
-  def initialize(player_gameboard, computer_gameboard, computer_fleet)
-    run_game_play_sequence(player_gameboard, computer_gameboard)
+  attr_reader :won
+  
+  def initialize(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
+    run_game_play_sequence(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
   end
 
-  def run_game_play_sequence
-    take_turns_playing(player_gameboard, computer_gameboard)
+  def run_game_play_sequence(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
+    take_turns_playing(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
   end
 
-  def take_turns_playing
+  def take_turns_playing(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
     player_one = PlayerOne.new
     player_one_display_board = DisplayBoard.new(computer_gameboard)
     computer = Computer.new
     computer_display_board = DisplayBoard.new(player_gameboard)
+    @won = ""
     winner = 0
     until winner > 0
-      win = player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, computer_fleet)
-        if win
+      player_wins = player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, computer_fleet)
+        if player_wins
+          @won = "player"
           winner += 1
+          return
         end
-      win = computer.computer_takes_a_turn(player_gameboard, computer_display_board, player_fleet)
-        if win
+      puts "Hit 'ENTER' to continue..."
+      continue = gets
+      computer_wins = computer.computer_takes_a_turn(player_gameboard, computer_display_board, player_fleet)
+        if computer_wins
+          @won = "computer"
           winner += 1
+          return
         end
+      puts "Hit 'ENTER' to continue..."
+      continue = gets
     end
+    won
   end
 end

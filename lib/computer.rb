@@ -2,7 +2,7 @@ class Computer
 
   def computer_takes_a_turn(player_gameboard, computer_display_board, player_fleet)
     winner = false
-    puts "\n\n\n\n\n\n\nNow it's the Computer's turn!\n\n\n\n\n"
+    puts "\n\n\nNow it's the Computer's turn!"
     computer_guess = select_random_available_square(player_gameboard)
     result = calculate_result(computer_guess)
     computer_guess_name = computer_guess.name
@@ -42,11 +42,11 @@ class Computer
   end
 
   def display_computer_result(result, computer_guess_name)
-    puts "\n\n\n\n\nThe computer guessed #{computer_guess_name.upcase}. It was a #{result}!"
+    puts "\nThe computer guessed #{computer_guess_name.upcase}. It was a #{result}!"
   end
 
   def cell(player_gameboard, cell_name)
-    computer_gameboard[(cell_name[0].upcase.ord - 65)][cell_name.downcase]
+    player_gameboard[(cell_name[0].upcase.ord - 65)][cell_name.downcase]
   end
 
   def check_on_fleet(player_fleet, player_gameboard)
