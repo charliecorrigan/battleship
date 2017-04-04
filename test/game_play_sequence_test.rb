@@ -21,7 +21,8 @@ class TestGamePlaySequence < Minitest::Test
     computer_fleet = game_setup_sequence.computer_fleet
     player_gameboard = game_setup_sequence.create_player_gameboard
     player_fleet = game_setup_sequence.player_fleet
-    won = game_play_sequence = GamePlaySequence.new(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
+    game_play_sequence = GamePlaySequence.new(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
+    won = game_play_sequence.won
     result = "player"
     assert_equal result, won
   end

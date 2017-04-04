@@ -1,6 +1,11 @@
 class Computer
+  attr_accessor :unsunk_ships
+  
+  def initialize(player_fleet)
+    @unsunk_ships = player_fleet
+  end
 
-  def computer_takes_a_turn(player_gameboard, computer_display_board, player_fleet)
+  def computer_takes_a_turn(player_gameboard, computer_display_board)
     winner = false
     puts "\n\n\nNow it's the Computer's turn!"
     computer_guess = select_random_available_square(player_gameboard)
@@ -8,7 +13,8 @@ class Computer
     computer_guess_name = computer_guess.name
     display_computer_result(result, computer_guess_name)
     if result == "hit"
-      winner = check_on_fleet(player_fleet, player_gameboard)
+      check_if_ship_is_sunk(unsunk_ships, player_gameboard)
+      winner = check_if_fleet_is_sunk(unsunk_ships)
     end
     computer_display_board.update(computer_guess_name, result)
     computer_display_board.display
@@ -31,14 +37,12 @@ class Computer
   end
 
   def calculate_result(computer_guess)
-    is_hit = computer_guess.ship
-    if is_hit
-      computer_guess.turn_result = "hit"
-      return "hit"
+    if computer_guess.ship
+      result = "hit"
     else
-      computer_guess.turn_result = "miss"
-      return "miss"
+      result = "miss"
     end
+    computer_guess.turn_result = result
   end
 
   def display_computer_result(result, computer_guess_name)
@@ -49,13 +53,17 @@ class Computer
     player_gameboard[(cell_name[0].upcase.ord - 65)][cell_name.downcase]
   end
 
-  def check_on_fleet(player_fleet, player_gameboard)
-    ship_length = 0
-    smart_fleet = player_fleet.map do |ship|
+  def create_cell_references_in_fleet(player_fleet, player_gameboard)
+    player_fleet.map do |ship|
       ship.map do |cell_name|
         cell_name = cell(player_gameboard, cell_name)
       end
     end
+  end
+
+  def check_if_ship_is_sunk(unsunk_ships, player_gameboard)
+    ship_length = 0
+    smart_fleet = create_cell_references_in_fleet(unsunk_ships, player_gameboard)
     smart_fleet.each do |ship|
       ship_length = ship.length
       sunk = ship.all? do |cell|
@@ -63,14 +71,19 @@ class Computer
       end
       if sunk
         puts "The computer sank the #{ship_length}-unit ship!"
+        @unsunk_ships.delete_if do |ship|
+          ship.length == ship_length
+        end
       end
-      sunk
+      return sunk
     end
-    if smart_fleet.empty?
-      puts "You sank the entire fleet!"
-      winner = true
-    end
-    winner
   end
 
+  def check_if_fleet_is_sunk(unsunk_ships)
+    winner = false
+    if unsunk_ships.empty?
+      puts "The computer sank the entire fleet!"
+      winner = true
+    end
+  end
 end

@@ -16,7 +16,7 @@ class GamePlaySequence
   def take_turns_playing(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
     player_one = PlayerOne.new
     player_one_display_board = DisplayBoard.new(computer_gameboard)
-    computer = Computer.new
+    computer = Computer.new(player_fleet)
     computer_display_board = DisplayBoard.new(player_gameboard)
     @won = ""
     winner = 0
@@ -32,7 +32,7 @@ class GamePlaySequence
         end
       puts "Hit 'ENTER' to continue..."
       continue = gets
-      computer_wins = computer.computer_takes_a_turn(player_gameboard, computer_display_board, player_fleet)
+      computer_wins = computer.computer_takes_a_turn(player_gameboard, computer_display_board)
       @computer_turns += 1
         if computer_wins
           @won = "computer"
