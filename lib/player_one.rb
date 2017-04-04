@@ -1,19 +1,21 @@
-require 'pry'
 class PlayerOne
+  attr_accessor :unsunk_ships
 
+def initialize(computer_fleet)
+  
   def player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
     winner = false
-    puts "\n\n\n\n\n\n\nYour turn, Player One!\n"
+    puts "\n\n\n\Your turn, Player One!\n"
     player_one_display_board.display
     player_guess = get_valid_player_input(computer_gameboard)
-    result = calculate_result(computer_gameboard, player_guess)
-    display_result(result)
-    if result == "hit"
-      winner = check_on_fleet(unsunk_ships, computer_gameboard)
-    end
-    player_one_display_board.update(player_guess, result)
-    player_one_display_board.display
-    winner
+    # result = calculate_result(computer_gameboard, player_guess)
+    # display_result(result)
+    # if result == "hit"
+    #   winner = check_on_fleet(unsunk_ships, computer_gameboard)
+    # end
+    # player_one_display_board.update(player_guess, result)
+    # player_one_display_board.display
+    # winner
   end
 
   def get_valid_player_input(computer_gameboard)
@@ -24,13 +26,12 @@ class PlayerOne
       valid
     end
     cell(computer_gameboard, player_guess).fired_on = true
-    player_guess
+    player_guess = cell(computer_gameboard, player_guess)
   end
 
   def solicit_player_guess
     puts "Enter the coordinate you wish to fire upon."
     player_guess = gets.chomp
-    player_guess
   end
 
   def is_guess_valid?(player_guess, computer_gameboard)
@@ -67,15 +68,13 @@ class PlayerOne
     possible_keys
   end
 
-  def calculate_result(computer_gameboard, player_guess)
-    is_hit = cell(computer_gameboard, player_guess).ship
-    if is_hit
-      cell(computer_gameboard, player_guess).turn_result = "hit"
-      return "hit"
+  def calculate_result(player_guess)
+    if player_guess.ship
+      result = "hit"
     else
-      cell(computer_gameboard, player_guess).turn_result = "miss"
-      return "miss"
+      result = "miss"
     end
+    player_guess.turn_result = result
   end
 
   def display_result(result)
@@ -120,4 +119,5 @@ class PlayerOne
     end
     winner
   end
+end  
 end

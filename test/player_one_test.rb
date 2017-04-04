@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/player_one'
@@ -5,90 +8,123 @@ require './lib/game_setup_sequence'
 require './lib/display_board'
 require './lib/generate_new_gameboard'
 require './lib/game_play_sequence'
+require 'pry'
 
 class TestPlayerOne < Minitest::Test
   def test_it_exists
-    skip
-    new_setup = GameSetupSequence.new("beginner")
-    computer_gameboard = new_setup.create_computer_gameboard
-    player_one = PlayerOne.new
+    computer_fleet = [["a1", "a2"], ["b1", "b2", "b3"]]
+    player_one = PlayerOne.new(computer_fleet)
     assert player_one
   end
 
-  def test_player_takes_a_turn
-    new_setup = GameSetupSequence.new("beginner")
-    computer_gameboard = new_setup.create_computer_gameboard
-    computer_fleet = new_setup.computer_fleet
-    player_one_display_board = DisplayBoard.new(computer_gameboard)
-    player_one = PlayerOne.new
-    unsunk_ships = computer_fleet
-    player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
+  def test_get_valid_player_input_rejects_noncell_input
+    skip
+    new_computer_gameboard = GenerateNewGameboard.new(4)
+    computer_gameboard = new_computer_gameboard.generate_blank_gameboard
+    new_computer_gameboard.link_gameboard_cells(computer_gameboard)
+    computer_fleet = [["a1", "a2"], ["b1", "b2", "b3"]]
+    player_one = PlayerOne.new(computer_fleet)
     
-    counter = 0
-    computer_gameboard.each do |row|
-      row.each do |cell|
-        if cell[1].fired_on == true
-          puts cell[1].name
-          counter += 1
-        end
-      end
-    end
-    assert_equal 1, counter
+    puts "**********TESTING NOTES***********"
+    puts "Currently testing for user input validation."
+    puts "Enter any cell name to continue or any non-cell name to test error handling."
+    player_guess = player_one.get_valid_player_input(computer_gameboard)
+    assert player_guess
+  end
 
-    player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
-    counter = 0
-    computer_gameboard.each do |row|
-      row.each do |cell|
-        if cell[1].fired_on == true
-          puts cell[1].name
-          counter += 1
-        end
-      end
-    end
-    assert_equal 2, counter
-
-    player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
-    counter = 0
-    computer_gameboard.each do |row|
-      row.each do |cell|
-        if cell[1].fired_on == true
-          puts cell[1].name
-          counter += 1
-        end
-      end
-    end
-    assert_equal 3, counter
+  def test_get_valid_player_input_rejects_already_guessed_coordinate
+    skip
+    new_computer_gameboard = GenerateNewGameboard.new(4)
+    computer_gameboard = new_computer_gameboard.generate_blank_gameboard
+    new_computer_gameboard.link_gameboard_cells(computer_gameboard)
+    computer_fleet = [["a1", "a2"], ["b1", "b2", "b3"]]
+    player_one = PlayerOne.new(computer_fleet)
+    
+    puts "**********TESTING NOTES***********"
+    puts "Currently testing for user input validation."
+    puts "'b2' has been set to 'fired_on = true' and should not be valid."
+    puts "Enter any cell name other than 'b2' to continue or 'b2' to test error handling."
+    computer_gameboard[1]["b2"].fired_on = true
+    player_guess = player_one.get_valid_player_input(computer_gameboard)
+    assert player_guess
+    assert_equal Cell, player_guess.class
   end
 
   def test_solicit_player_guess_returns_string
-    skip
-    player_one = PlayerOne.new
+    computer_fleet = [["a1", "a2"], ["b1", "b2", "b3"]]
+    player_one = PlayerOne.new(computer_fleet)
     player_guess = player_one.solicit_player_guess
     assert_equal String, player_guess.class
   end
 
-  def test_is_guess_valid
-    skip
-    new_setup = GameSetupSequence.new("beginner")
-    computer_gameboard = new_setup.create_computer_gameboard
-    player_one = PlayerOne.new
-    valid = player_one.is_guess_valid?("A1", computer_gameboard)
-    assert valid
-    valid = player_one.is_guess_valid?("R1", computer_gameboard)
-    refute valid
-    computer_gameboard[0]["a2"].fired_on = true
-    valid = player_one.is_guess_valid?("A2", computer_gameboard)
-    refute valid
+  def test_calculate_result
+    new_computer_gameboard = GenerateNewGameboard.new(4)
+    computer_gameboard = new_computer_gameboard.generate_blank_gameboard
+    new_computer_gameboard.link_gameboard_cells(computer_gameboard)
+    computer_fleet = [["d3", "d4"], ["b1", "b2", "b3"]]
+    player_one = PlayerOne.new(computer_fleet)
+    computer_gameboard[3]["d4"].ship = true
+    player_guess = computer_gameboard[3]["d4"]
+    result = player_one.calculate_result(player_guess)
+    assert_equal "hit", result
+
+    computer_gameboard[3]["d4"].ship = false
+    player_guess = computer_gameboard[3]["d4"]
+    result = player_one.calculate_result(player_guess)
+    assert_equal "miss", result
   end
 
-  def test_get_valid_player_input
-    skip
-    new_setup = GameSetupSequence.new("beginner")
-    computer_gameboard = new_setup.create_computer_gameboard
-    player_one = PlayerOne.new
-    player_guess = player_one.get_valid_player_input(computer_gameboard)
-    assert player_guess
-  end
+  # def test_player_takes_a_turn
+  #   skip
+  #   new_setup = GameSetupSequence.new("beginner")
+  #   computer_gameboard = new_setup.create_computer_gameboard
+  #   computer_fleet = new_setup.computer_fleet
+  #   player_one_display_board = DisplayBoard.new(computer_gameboard)
+  #   player_one = PlayerOne.new
+  #   unsunk_ships = computer_fleet
+  #   player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
+    
+  #   counter = 0
+  #   computer_gameboard.each do |row|
+  #     row.each do |cell|
+  #       if cell[1].fired_on == true
+  #         puts cell[1].name
+  #         counter += 1
+  #       end
+  #     end
+  #   end
+  #   assert_equal 1, counter
+
+  #   player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
+  #   counter = 0
+  #   computer_gameboard.each do |row|
+  #     row.each do |cell|
+  #       if cell[1].fired_on == true
+  #         puts cell[1].name
+  #         counter += 1
+  #       end
+  #     end
+  #   end
+  #   assert_equal 2, counter
+
+  #   player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, unsunk_ships)
+  #   counter = 0
+  #   computer_gameboard.each do |row|
+  #     row.each do |cell|
+  #       if cell[1].fired_on == true
+  #         puts cell[1].name
+  #         counter += 1
+  #       end
+  #     end
+  #   end
+  #   assert_equal 3, counter
+  # end
+
+
+
+
+
+  
 
   def test_calculate_result_return
     skip

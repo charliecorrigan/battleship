@@ -14,7 +14,7 @@ class GamePlaySequence
   end
 
   def take_turns_playing(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
-    player_one = PlayerOne.new
+    player_one = PlayerOne.new(computer_fleet)
     player_one_display_board = DisplayBoard.new(computer_gameboard)
     computer = Computer.new(player_fleet)
     computer_display_board = DisplayBoard.new(player_gameboard)
