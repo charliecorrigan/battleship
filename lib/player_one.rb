@@ -5,7 +5,7 @@ class PlayerOne
     winner = false
     player_one_display_board.display
     # player_guess = get_valid_player_input(computer_gameboard)
-    # result = calculate_result(player_guess)
+    # result = calculate_result(computer_gameboard, player_guess)
     # display_result(result)
     # if result = "hit"
     # if result = "hit"
@@ -64,7 +64,12 @@ class PlayerOne
     possible_keys
   end
 
-  def calculate_result(player_guess)
-    #<----is cell.ship? change cell status to return "hit"
+  def calculate_result(computer_gameboard, player_guess)
+    is_hit = cell(computer_gameboard, player_guess).ship
+    if is_hit
+      return "hit"
+    else
+      return "miss"
+    end
   end
 end

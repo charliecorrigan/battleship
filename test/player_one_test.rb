@@ -43,12 +43,34 @@ class TestPlayerOne < Minitest::Test
   end
 
   def test_get_valid_player_input
-    
+    skip
     new_setup = GameSetupSequence.new("beginner")
     computer_gameboard = new_setup.create_computer_gameboard
     player_one = PlayerOne.new
     player_guess = player_one.get_valid_player_input(computer_gameboard)
     assert player_guess
   end
+
+  def test_calculate_result_return
+    new_setup = GameSetupSequence.new("beginner")
+    computer_gameboard = new_setup.create_computer_gameboard
+    player_one = PlayerOne.new
+
+    computer_gameboard[0]["a2"].ship = true
+    result = player_one.calculate_result(computer_gameboard, "A2")
+    assert_equal "hit", result
+
+    computer_gameboard[3]["d2"].ship = false
+    result = player_one.calculate_result(computer_gameboard, "D2")
+    assert_equal "miss", result
+  end
+  # def calculate_result(computer_gameboard, player_guess)
+  #   is_hit = cell(computer_gameboard, player_guess).ship
+  #   if is_hit
+  #     return "hit"
+  #   else
+  #     return "miss"
+  #   end
+  # end
 
 end
