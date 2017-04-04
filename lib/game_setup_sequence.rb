@@ -56,9 +56,17 @@ class GameSetupSequence
     player_ship_placement.show_ship_placement_instructions(difficulty)
     ships_in_play.each do |this_ship|
       ship_coordinates = player_ship_placement.player_selects_ship_placement(player_gameboard, this_ship)
-      @player_fleet << ship_coordinates
+      save_player_ship_coordinates(ship_coordinates)
       player_ship_placement.place_ship_on_board(ship_coordinates)
     end
     player_gameboard
+  end
+
+  def save_player_ship_coordinates(ship_coordinates)
+    ship_coordinate_names = []
+    ship_coordinates.each do |cell|
+      ship_coordinate_names << cell.name
+    end
+    @player_fleet << ship_coordinate_names
   end
 end
