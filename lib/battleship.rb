@@ -7,8 +7,13 @@ instructions_option =   "i"
 play_option =           "p"
 instructions =          "Type your commands followed by the 'enter' key."
 user_choice =           ""
+header = " __     _  _____ ______ __   ____  __   __   __  _______  ____\n|   \\  / \\ L   _|L   _| | |  | _| /  _\\ | |  | | |_   _| |    \\\n| L\\| / _ \\ | |   | |   | |  | |  | |   | |  | |   | |   | L\\  |\n|  _/|  _  || |   | |   | |  | |_  \\ \\  | L__| |   | |   |  __/\n|   \\| | | || |   | |   | |  |  _|  | | |  ___ |   | |   | |\n| L\\|| | | || |   | |   | l_ | |_  _/ / | |  | |  _| |__ | |\n|___||_| |_||_|   |_|   |___||___||__/  |_|  |_| |______||_|"
+
+
+puts header
 
 puts welcome_message
+
 puts title_screen_options
 until user_choice.downcase == play_option || user_choice.downcase == quit_option
   user_choice = gets.chomp
