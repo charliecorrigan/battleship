@@ -1,5 +1,6 @@
 require './lib/game_setup_sequence'
 require './lib/game_play_sequence'
+require './lib/game_end_sequence'
 
 class PlayBattleship
 
@@ -17,7 +18,9 @@ class PlayBattleship
     game_play_sequence = GamePlaySequence.new(player_gameboard, computer_gameboard, player_fleet, computer_fleet)
     end_time = get_time_stamp
     winner = game_play_sequence.won
-    game_end_sequence = GameEndSequence.new(winner)
+    computer_turns = game_play_sequence.computer_turns
+    player_turns = game_play_sequence.player_turns
+    game_end_sequence = GameEndSequence.new(winner, start_time, end_time, computer_turns, player_turns)
   end
 
   def get_time_stamp
