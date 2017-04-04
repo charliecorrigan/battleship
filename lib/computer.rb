@@ -3,13 +3,14 @@ class Computer
   def computer_takes_a_turn(player_gameboard, computer_display_board, player_fleet)
     winner = false
     puts "\n\n\n\n\n\n\nNow it's the Computer's turn!\n\n\n\n\n"
-    computer_guess = select_random_available_square
-    result = calculate_result(player_gameboard, computer_guess)
-    display_computer_result(result, computer_guess)
-  #   if result == "hit"
-  #     winner = check_on_fleet(unsunk_ships, computer_gameboard)
-  #   end
-    computer_display_board.update(computer_guess, result)
+    computer_guess = select_random_available_square(player_gameboard)
+    result = calculate_result(computer_guess)
+    computer_guess_name = computer_guess.name
+    display_computer_result(result, computer_guess_name)
+    if result == "hit"
+      winner = check_on_fleet(player_fleet, player_gameboard)
+    end
+    computer_display_board.update(computer_guess_name, result)
     computer_display_board.display
     winner
   end
@@ -25,6 +26,7 @@ class Computer
         valid = true
       end
     end
+    player_gameboard[board_index][key].fired_on = true
     player_gameboard[board_index][key]
   end
 
@@ -39,26 +41,36 @@ class Computer
     end
   end
 
-  def display_computer_result(result, computer_guess)
-    puts "\n\n\n\n\nThe computer guessed #{computer_guess.upcase}. It was a #{result}!"
+  def display_computer_result(result, computer_guess_name)
+    puts "\n\n\n\n\nThe computer guessed #{computer_guess_name.upcase}. It was a #{result}!"
   end
-  # def is_guess_valid?(player_guess, computer_gameboard)
-  #   if player_guess.length != 2
-  #     puts "Error: That square name doesn't exist."
-  #     valid_cell = false
-  #     return valid_cell
-  #   end
-  #   possible_keys = list_possible_keys(computer_gameboard)
-  #   split_user_input = player_guess.downcase.split
-  #   valid_cell = split_user_input.all? do |input|
-  #     possible_keys.include?(input)
-  #   end
-  #   if valid_cell != true
-  #     puts "Error: That square name doesn't exist."
-  #   elsif valid_cell && cell(computer_gameboard, player_guess).fired_on
-  #     puts "Error: That square has already been fired upon."
-  #     valid_cell = false
-  #   end
-  #   valid_cell
-  # end
+
+  def cell(player_gameboard, cell_name)
+    computer_gameboard[(cell_name[0].upcase.ord - 65)][cell_name.downcase]
+  end
+
+  def check_on_fleet(player_fleet, player_gameboard)
+    ship_length = 0
+    smart_fleet = player_fleet.map do |ship|
+      ship.map do |cell_name|
+        cell_name = cell(player_gameboard, cell_name)
+      end
+    end
+    smart_fleet.each do |ship|
+      ship_length = ship.length
+      sunk = ship.all? do |cell|
+        cell.turn_result == "hit"
+      end
+      if sunk
+        puts "The computer sank the #{ship_length}-unit ship!"
+      end
+      sunk
+    end
+    if smart_fleet.empty?
+      puts "You sank the entire fleet!"
+      winner = true
+    end
+    winner
+  end
+
 end
