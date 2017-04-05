@@ -1,4 +1,5 @@
 require './lib/play_battleship'
+system "clear"
 
 welcome_message =       "\nWelcome to BATTLESHIP\n\n"
 title_screen_options =  "Would you like to (p)lay, read the (i)nstructions, or (q)uit?\n\n>"

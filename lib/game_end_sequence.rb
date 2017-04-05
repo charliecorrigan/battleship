@@ -1,16 +1,17 @@
 class GameEndSequence
 
   def initialize(winner, start_time, end_time, computer_turns, player_turns)
+    system "clear"
     display_game_end_messages(winner, start_time, end_time, computer_turns, player_turns)
   end
 
   def message(winner)
     if winner == "computer"
       `say "I AM SO SORRY...You have lost the game!...You must be really embarrassed...I hope you feel better soon."`
-      return "I AM SO SORRY. You have lost the game!\nYou must be really embarrassed. I hope you feel better soon."
+      return "\nI AM SO SORRY. You have lost the game!\nYou must be really embarrassed. I hope you feel better soon."
     else
       `say "You sank all enemy ships...You win!"`
-      return "CONGRATULATIONS! You have won the game!"
+      return "\nCONGRATULATIONS! You have won the game!"
     end
   end
 
