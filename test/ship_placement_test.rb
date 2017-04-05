@@ -145,7 +145,6 @@ class TestShipPlacement < Minitest::Test
   end
 
   def test_validate_player_coordinates
-    
     new_gameboard = GenerateNewGameboard.new(4)
     blank_gameboard = new_gameboard.generate_blank_gameboard
     new_gameboard.link_gameboard_cells(blank_gameboard)
