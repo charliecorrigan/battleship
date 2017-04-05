@@ -107,6 +107,7 @@ end
       end
       if sunk
         puts "You sank the #{ship_length}-unit ship!"
+        `say "You sank an enemy ship!..."`
         @unsunk_ships.delete_if do |ship|
           ship.length == ship_length
       end
