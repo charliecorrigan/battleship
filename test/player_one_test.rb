@@ -157,7 +157,8 @@ class TestPlayerOne < Minitest::Test
     computer_gameboard[0]["a2"].turn_result = "hit"
     computer_fleet = [["a1", "a2"], ["b1", "b2", "b3"]]
     player_one = PlayerOne.new(computer_fleet)
-    sunk = player_one.check_if_ship_is_sunk(computer_fleet, computer_gameboard)
+    unsunk_ships = player_one.unsunk_ships
+    sunk = player_one.check_if_ship_is_sunk(unsunk_ships, computer_gameboard)
     assert sunk
   end
 

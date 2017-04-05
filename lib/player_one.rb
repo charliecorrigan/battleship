@@ -111,9 +111,9 @@ end
           ship.length == ship_length
         end
       end
-      sunk
+      return sunk
     end
-    return sunk
+    #return sunk
   end
 
   def check_if_fleet_is_sunk(unsunk_ships)
