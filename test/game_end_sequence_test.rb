@@ -29,7 +29,7 @@ class TestGameEndSequence < Minitest::Test
     computer_turns = 6
     player_turns = 7
     end_game = GameEndSequence.new(winner, start_time, end_time, computer_turns, player_turns)
-    assert_equal "I AM SO SORRY. You have lost the game!\nYou must be really embarrassed. I hope you feel better soon.", end_game.message(winner)
+    assert_equal "\nI AM SO SORRY. You have lost the game!\nYou must be really embarrassed. I hope you feel better soon.", end_game.message(winner)
   end
 
   def test_length_of_game_returns_accurate_length
