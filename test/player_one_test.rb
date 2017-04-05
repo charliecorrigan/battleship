@@ -170,6 +170,29 @@ class TestPlayerOne < Minitest::Test
     refute player_one.check_if_fleet_is_sunk(unsunk_ships)
   end
 
+  def test_check_if_fleet_is_sunk_the_hard_way
+    new_computer_gameboard = GenerateNewGameboard.new(4)
+    computer_gameboard = new_computer_gameboard.generate_blank_gameboard
+    new_computer_gameboard.link_gameboard_cells(computer_gameboard)
+    computer_gameboard[0]["a1"].ship = true
+    computer_gameboard[0]["a2"].ship = true
+    computer_gameboard[1]["b1"].ship = true
+    computer_gameboard[1]["b2"].ship = true
+    computer_gameboard[1]["b3"].ship = true
+    computer_gameboard[0]["a1"].turn_result = "hit"
+    computer_gameboard[0]["a2"].turn_result = "hit"
+    computer_fleet = [["a1", "a2"], ["b1", "b2", "b3"]]
+    player_one = PlayerOne.new(computer_fleet)
+    unsunk_ships = player_one.unsunk_ships
+    player_one.check_if_ship_is_sunk(unsunk_ships, computer_gameboard)
+    refute player_one.check_if_fleet_is_sunk(unsunk_ships)
+    computer_gameboard[1]["b1"].turn_result = "hit"
+    computer_gameboard[1]["b2"].turn_result = "hit"
+    computer_gameboard[1]["b3"].turn_result = "hit"
+    player_one.check_if_ship_is_sunk(unsunk_ships, computer_gameboard)
+    assert player_one.check_if_fleet_is_sunk(unsunk_ships)
+  end
+
   def test_player_takes_a_turn
     new_setup = GameSetupSequence.new("beginner")
     computer_gameboard = new_setup.create_computer_gameboard

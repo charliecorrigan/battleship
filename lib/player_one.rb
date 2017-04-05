@@ -1,3 +1,4 @@
+require 'pry'
 class PlayerOne
   attr_accessor :unsunk_ships
 
@@ -14,8 +15,10 @@ end
     player_guess_name = player_guess.name
     display_result(result)
     if result == "hit"
-      check_if_ship_is_sunk(unsunk_ships, computer_gameboard)
-      winner = check_if_fleet_is_sunk(unsunk_ships)
+      sunk = check_if_ship_is_sunk(unsunk_ships, computer_gameboard)
+        if sunk
+          winner = check_if_fleet_is_sunk(unsunk_ships)
+        end
     end
     player_one_display_board.update(player_guess_name, result)
     player_one_display_board.display
@@ -95,6 +98,7 @@ end
 
   def check_if_ship_is_sunk(unsunk_ships, computer_gameboard)
     ship_length = 0
+    sunk = false
     smart_fleet = create_cell_references_in_fleet(unsunk_ships, computer_gameboard)
     smart_fleet.each do |ship|
       ship_length = ship.length
@@ -107,8 +111,9 @@ end
           ship.length == ship_length
         end
       end
-      return sunk
+      sunk
     end
+    return sunk
   end
 
   def check_if_fleet_is_sunk(unsunk_ships)
@@ -117,5 +122,6 @@ end
       puts "You sank the entire fleet!"
       winner = true
     end
+    winner
   end  
 end

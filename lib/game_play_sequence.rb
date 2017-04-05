@@ -24,8 +24,7 @@ class GamePlaySequence
     @computer_turns = 0
     @player_turns = 0
     until winner > 0
-      player_wins = player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, computer_fleet)
-      binding.pry
+      player_wins = player_one.player_takes_a_turn(computer_gameboard, player_one_display_board)
       @player_turns += 1
         if player_wins
           @won = "player"
