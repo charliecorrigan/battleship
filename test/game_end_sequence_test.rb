@@ -21,7 +21,7 @@ class TestGameEndSequence < Minitest::Test
     computer_turns = 6
     player_turns = 7
     end_game = GameEndSequence.new(winner, start_time, end_time, computer_turns, player_turns)
-    assert_equal "CONGRATULATIONS! You have won the game!", end_game.message(winner)
+    assert_equal "\nCONGRATULATIONS! You have won the game!", end_game.message(winner)
 
     winner = "computer"
     start_time = "05:25:02"

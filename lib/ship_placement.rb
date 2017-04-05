@@ -1,5 +1,3 @@
-require 'pry'
-
 class ShipPlacement
   attr_reader :ships
 
@@ -133,7 +131,6 @@ class ShipPlacement
     contain_cell_names
   end
 
-
   def player_input_rows(coordinates)
     coordinate_rows = coordinates.map do |coordinate|
         coordinate[0]
@@ -158,42 +155,6 @@ class ShipPlacement
       end
     coordinate_rows_as_numbers
   end
-
-  # def validate_player_coordinates(gameboard, player_input, ship_size)
-  #     individual_coordinates = player_input.downcase.split
-  #     coordinate_rows = player_input_rows(individual_coordinates)
-  #     coordinate_columns = player_input_columns(individual_coordinates)
-  #     coordinate_rows_as_numbers = player_input_rows_as_numbers(coordinate_rows)
-      
-  #     return if ships_are_diagonal(coordinate_rows, coordinate_columns)
-      
-  #     if coordinates_are_all_in_same_row(coordinate_rows)
-  #       spread = distance_between_coordinates(coordinate_columns)
-  #       return if ship_doesnt_fit(spread, ship_size)
-  #       direction = "right" if spread < 0
-  #       direction = "left" if spread > -1
-  #     end
-  #     if coordinates_are_all_in_same_column(coordinate_columns)
-  #       spread = distance_between_coordinates(coordinate_rows_as_numbers)
-  #       return if ship_doesnt_fit(spread, ship_size)
-  #       direction = "down" if spread < 0
-  #       direction = "up" if spread > -1
-  #     end
-  #     current_cell = declare_current_cell(gameboard, coordinate_rows_as_numbers, individual_coordinates)
-  #     return if ships_overlap(current_cell)
-  #     ship_coordinates = [current_cell]
-  #     (ship_size - 1).times do
-  #       next_cell = find_next_cell(current_cell, direction)
-  #       if ships_overlap(current_cell)
-  #         ship_coordinates = nil
-  #         return
-  #       else
-  #         ship_coordinates << next_cell
-  #         current_cell = next_cell
-  #       end
-  #     end
-  #   ship_coordinates
-  # end    
 
   def coordinates_are_invalid(coordinate_rows, coordinate_columns, coordinate_rows_as_numbers, ship_size)
     return true if ships_are_diagonal(coordinate_rows, coordinate_columns)

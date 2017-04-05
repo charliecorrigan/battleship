@@ -50,8 +50,8 @@ class TestComputer < Minitest::Test
     result = computer.calculate_result(computer_guess)
     assert_equal "hit", result
 
-    player_gameboard[3]["d4"].ship = false
-    computer_guess = player_gameboard[3]["d4"]
+    player_gameboard[3]["d1"].ship = false
+    computer_guess = player_gameboard[3]["d1"]
     result = computer.calculate_result(computer_guess)
     assert_equal "miss", result
   end
@@ -101,6 +101,10 @@ class TestComputer < Minitest::Test
   end
 
   def test_computer_takes_a_turn
+    puts "**********TESTING NOTES*************************"
+    puts "Currently testing #computer_takes_a_turn sequence."
+    puts "Select coordinates for ships to continue."
+    puts "************************************************"
     new_setup = GameSetupSequence.new("beginner")
     player_gameboard = new_setup.create_player_gameboard
     player_fleet = new_setup.player_fleet

@@ -52,12 +52,14 @@ class TestGameSetupSequence < Minitest::Test
   end
 
   def test_create_player_gameboard_return_values
+    puts "**********TESTING NOTES*************************"
+    puts "Currently testing #create_player_gameboard"
+    puts "Enter ship coordinates to continue."
+    puts "************************************************"
     new_setup = GameSetupSequence.new("beginner")
     player_gameboard = new_setup.create_player_gameboard
     assert_equal Array, player_gameboard.class
-    
     assert_equal 4, player_gameboard.length
-    
     counter = 0
     player_gameboard.each do |row|
       row.each do |cell|
