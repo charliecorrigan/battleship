@@ -6,8 +6,9 @@ class Computer
   end
 
   def computer_takes_a_turn(player_gameboard, computer_display_board)
+    system "clear"
     winner = false
-    puts "\n\n\nNow it's the Computer's turn!"
+    puts "\nNow it's the Computer's turn!"
     computer_guess = select_random_available_square(player_gameboard)
     result = calculate_result(computer_guess)
     computer_guess_name = computer_guess.name

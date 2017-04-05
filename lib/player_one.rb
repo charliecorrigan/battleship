@@ -7,13 +7,14 @@ def initialize(computer_fleet)
 end
   
   def player_takes_a_turn(computer_gameboard, player_one_display_board)
+    system "clear"
     winner = false
-    puts "\n\n\n\Your turn, Player One!\n"
+    puts "\nYour turn, Player One!\n"
     player_one_display_board.display
     player_guess = get_valid_player_input(computer_gameboard)
     result = calculate_result(player_guess)
     player_guess_name = player_guess.name
-    display_result(result)
+    display_result(result, player_guess_name)
     if result == "hit"
       sunk = check_if_ship_is_sunk(unsunk_ships, computer_gameboard)
         if sunk
@@ -84,8 +85,9 @@ end
     possible_keys
   end
 
-  def display_result(result)
-    puts "\nIt was a #{result}!"
+  def display_result(result, player_guess_name)
+    system "clear"
+    puts "\nYou guessed #{player_guess_name.upcase}.\nIt was a #{result}!"
   end
 
   def create_cell_references_in_fleet(computer_fleet, computer_gameboard)

@@ -44,5 +44,11 @@ class GameEndSequence
     puts message(winner)
     puts number_of_turns(winner, computer_turns, player_turns)
     puts length_of_game(start_time, end_time)
+    puts "\n\n\n"
+    puts boat_art
+  end
+
+  def boat_art
+    "                                             .\n                           .                 |\n                           +                 |\n                  .        |                *+W+-*\n     .           +y        +W+              . H                 .\n  .  +y            |I.   y  |               ! H= .           .  ^\n  !   \\     .     |H '. /   |  ___.        .! H  !   +--.--y !  V\n  !    \\     \\  +=|H|=='.=+ | |====\\   _  '_H_H__H_. H_/=  J !  !\n. !     \\'    VVV_HHH_/__'._H |  E  \\_|=|_|========|_|==|____H. ! _______.\nI-H_I=I=HH_==_|I_IIIII_I_I_=HH|======.I-I-I-=======-I=I=I=I_=H|=H'===I=I/\n\\                                                                      ,\n |                                                                    /\n .___________________________________________________________________'\n"
   end
 end
