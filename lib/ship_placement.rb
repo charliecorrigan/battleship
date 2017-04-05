@@ -165,78 +165,84 @@ class ShipPlacement
   #     coordinate_columns = player_input_columns(individual_coordinates)
   #     coordinate_rows_as_numbers = player_input_rows_as_numbers(coordinate_rows)
       
-  #     if coordinate_rows.uniq.length > 1 && coordinate_columns.uniq.length > 1
-  #       puts "Ships cannot be placed diagonally."
-  #       return
-  #     end
-  #     if coordinate_rows.uniq.length == 1
-  #       spread = coordinate_columns[0].to_i - coordinate_columns[-1].to_i
-  #       if (spread.abs + 1) != ship_size
-  #         puts "Ship doesn't fit in squares provided."
-  #         return
-  #       else
-  #         if spread < 0
-  #           direction = "right"
-  #         else
-  #           direction = "left"
-  #         end
-  #       end
-  #     end
-  #     if coordinate_columns.uniq.length == 1
-  #       spread = coordinate_rows_as_numbers[0] - coordinate_rows_as_numbers[-1]
-  #       if (spread.abs + 1) != ship_size
-  #         puts "Ship doesn't fit in squares provided."
-  #         return
-  #       else
-  #         if spread < 0
-  #           direction = "down"
-  #         else
-  #           direction = "up"
-  #         end
-  #       end
-  #     end
+  #     return if ships_are_diagonal(coordinate_rows, coordinate_columns)
       
-  #       current_cell = gameboard[(coordinate_rows_as_numbers[0] - 1)][(individual_coordinates[0])]
-  #       if current_cell.ship
-  #         puts "Error: Ships cannot overlap."
+  #     if coordinates_are_all_in_same_row(coordinate_rows)
+  #       spread = distance_between_coordinates(coordinate_columns)
+  #       return if ship_doesnt_fit(spread, ship_size)
+  #       direction = "right" if spread < 0
+  #       direction = "left" if spread > -1
+  #     end
+  #     if coordinates_are_all_in_same_column(coordinate_columns)
+  #       spread = distance_between_coordinates(coordinate_rows_as_numbers)
+  #       return if ship_doesnt_fit(spread, ship_size)
+  #       direction = "down" if spread < 0
+  #       direction = "up" if spread > -1
+  #     end
+  #     current_cell = declare_current_cell(gameboard, coordinate_rows_as_numbers, individual_coordinates)
+  #     return if ships_overlap(current_cell)
+  #     ship_coordinates = [current_cell]
+  #     (ship_size - 1).times do
+  #       next_cell = find_next_cell(current_cell, direction)
+  #       if ships_overlap(current_cell)
+  #         ship_coordinates = nil
   #         return
+  #       else
+  #         ship_coordinates << next_cell
+  #         current_cell = next_cell
   #       end
-  #       ship_coordinates = [current_cell]
-        
-  #       (ship_size - 1).times do
-  #         next_cell = find_next_cell(current_cell, direction)
-          
-  #         if next_cell.ship 
-  #           puts "Error: Ships cannot overlap."
-  #           ship_coordinates = nil
-  #           return
-  #         else
-  #           ship_coordinates << next_cell
-  #           current_cell = next_cell
-  #         end
-  #       end
-  #       ship_coordinates
-  # end
+  #     end
+  #   ship_coordinates
+  # end    
+
+  def coordinates_are_invalid(coordinate_rows, coordinate_columns, coordinate_rows_as_numbers, ship_size)
+    return true if ships_are_diagonal(coordinate_rows, coordinate_columns)
+    if coordinates_are_all_in_same_row(coordinate_rows)
+        spread = distance_between_coordinates(coordinate_columns)
+        return true if ship_doesnt_fit(spread, ship_size)
+    end
+    if coordinates_are_all_in_same_column(coordinate_columns)
+      spread = distance_between_coordinates(coordinate_rows_as_numbers)
+      return true if ship_doesnt_fit(spread, ship_size)
+    end
+  end
+
+  def find_direction(coordinate_rows, coordinate_columns, coordinate_rows_as_numbers)
+    if coordinates_are_all_in_same_row(coordinate_rows)
+        spread = distance_between_coordinates(coordinate_columns)
+        direction = "right" if spread < 0
+        direction = "left" if spread > -1
+      end
+    if coordinates_are_all_in_same_column(coordinate_columns)
+      spread = distance_between_coordinates(coordinate_rows_as_numbers)
+      direction = "down" if spread < 0
+      direction = "up" if spread > -1
+    end
+    return direction
+  end
 
   def validate_player_coordinates(gameboard, player_input, ship_size)
       individual_coordinates = player_input.downcase.split
       coordinate_rows = player_input_rows(individual_coordinates)
       coordinate_columns = player_input_columns(individual_coordinates)
       coordinate_rows_as_numbers = player_input_rows_as_numbers(coordinate_rows)
-      return if ships_are_diagonal(coordinate_rows, coordinate_columns)
-      if coordinates_are_all_in_same_row(coordinate_rows)
-        spread = distance_between_coordinates(coordinate_columns)
-        return if ship_doesnt_fit(spread, ship_size)
-        direction = "right" if spread < 0
-        direction = "left" if spread > -1
+      return if coordinates_are_invalid(coordinate_rows, coordinate_columns, coordinate_rows_as_numbers, ship_size)
+      direction = find_direction(coordinate_rows, coordinate_columns, coordinate_rows_as_numbers)
+      
+      current_cell = declare_current_cell(gameboard, coordinate_rows_as_numbers, individual_coordinates)
+      return if ships_overlap(current_cell)
+      ship_coordinates = [current_cell]
+      (ship_size - 1).times do
+        next_cell = find_next_cell(current_cell, direction)
+        if ships_overlap(current_cell)
+          ship_coordinates = nil
+          return
+        else
+          ship_coordinates << next_cell
+          current_cell = next_cell
         end
       end
-      if coordinates_are_all_in_same_column(coordinate_columns)
-        spread = distance_between_coordinates(coordinate_rows_as_numbers)
-        return if ship_doesnt_fit(spread, ship_size)
-        direction = "down" if spread < 0
-        direction = "up" if spread > -1
-      end
+    ship_coordinates
   end    
   
   def ships_are_diagonal(coordinate_rows, coordinate_columns)
@@ -275,22 +281,5 @@ class ShipPlacement
       return true
     end
   end  
-        current_cell = declare_current_cell(gameboard, coordinate_rows_as_numbers, individual_coordinates)
-        return if ships_overlap(current_cell)
-        ship_coordinates = [current_cell]
         
-        (ship_size - 1).times do
-          next_cell = find_next_cell(current_cell, direction)
-          
-          if next_cell.ship 
-            puts "Error: Ships cannot overlap."
-            ship_coordinates = nil
-            return
-          else
-            ship_coordinates << next_cell
-            current_cell = next_cell
-          end
-        end
-        ship_coordinates
-  end
 end
