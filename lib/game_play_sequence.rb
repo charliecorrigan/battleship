@@ -1,6 +1,7 @@
 require './lib/player_one'
 require './lib/computer'
 require './lib/display_board'
+require 'pry'
 
 class GamePlaySequence
   attr_reader :won, :computer_turns, :player_turns
@@ -24,6 +25,7 @@ class GamePlaySequence
     @player_turns = 0
     until winner > 0
       player_wins = player_one.player_takes_a_turn(computer_gameboard, player_one_display_board, computer_fleet)
+      binding.pry
       @player_turns += 1
         if player_wins
           @won = "player"
