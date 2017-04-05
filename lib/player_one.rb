@@ -109,11 +109,10 @@ end
         puts "You sank the #{ship_length}-unit ship!"
         @unsunk_ships.delete_if do |ship|
           ship.length == ship_length
-        end
       end
       return sunk
+      end
     end
-    #return sunk
   end
 
   def check_if_fleet_is_sunk(unsunk_ships)

@@ -5,6 +5,7 @@ require './lib/game_end_sequence'
 class PlayBattleship
 
   def initialize
+    `say "Let's play battle ship!"`
     run_game_sequences
   end
 
