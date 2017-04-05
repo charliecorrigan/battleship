@@ -13,37 +13,29 @@ class ShipPlacement
       board_index = rand(size)
       key_index = rand(size)
       key = gameboard[board_index].keys[key_index]
-      if gameboard[board_index][key].ship == false
+      coordinate = gameboard[board_index][key]
+      if coordinate.ship == false
         valid = true
       end
     end
-    gameboard[board_index][key]
+    coordinate
   end
 
   def select_random_direction
     value = rand(4)
-    if value == 0
-      direction = "up"
-    elsif value == 1
-      direction = "down"
-    elsif value == 2
-      direction = "right"
-    else
-      direction = "left"
-    end
+    direction = "up" if value == 0
+    direction = "down" if value == 1
+    direction = "right" if value == 2
+    direction = "left" if value == 3
     direction
   end
 
   def find_next_cell(current_cell, direction)
-    if direction == "up"
-      current_cell.up
-    elsif direction == "down"
-      current_cell.down
-    elsif direction == "right"
-      current_cell.right
-    else
-      current_cell.left
-    end
+    next_cell = current_cell.up if direction == "up"
+    next_cell = current_cell.down if direction == "down"
+    next_cell = current_cell.right if direction == "right"
+    next_cell = current_cell.left if direction == "left"
+    next_cell
   end
 
   def find_valid_random_direction(first_coordinate, ship_size)
@@ -54,7 +46,7 @@ class ShipPlacement
       direction = select_random_direction
       (ship_size - 1).times do
         next_cell = find_next_cell(current_cell, direction)
-        if next_cell.nil? || next_cell.ship == true
+        if next_cell.nil? || next_cell.ship
           valid = false
           break
         else

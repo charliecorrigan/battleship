@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship_placement'
@@ -19,7 +21,6 @@ class TestShipPlacement < Minitest::Test
     size = new_gameboard.size
     ship_placement = ShipPlacement.new([2, 3])
     random_coordinate = ship_placement.select_random_coordinate(blank_gameboard, size)
-    
     assert_equal Cell, random_coordinate.class
     assert_equal false, random_coordinate.ship
   end
