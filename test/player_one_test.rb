@@ -119,7 +119,8 @@ class TestPlayerOne < Minitest::Test
     computer_fleet = [["d3", "d4"], ["b1", "b2", "b3"]]
     player_one = PlayerOne.new(computer_fleet)
     result = "miss"
-    puts_statement = player_one.display_result(result)
+    player_guess_name = "A1"
+    puts_statement = player_one.display_result(result, player_guess_name)
     assert_nil puts_statement
   end
 

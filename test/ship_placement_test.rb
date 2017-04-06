@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship_placement'
@@ -19,7 +21,6 @@ class TestShipPlacement < Minitest::Test
     size = new_gameboard.size
     ship_placement = ShipPlacement.new([2, 3])
     random_coordinate = ship_placement.select_random_coordinate(blank_gameboard, size)
-    
     assert_equal Cell, random_coordinate.class
     assert_equal false, random_coordinate.ship
   end
@@ -116,6 +117,10 @@ class TestShipPlacement < Minitest::Test
     new_gameboard.link_gameboard_cells(blank_gameboard)
     ship_placement = ShipPlacement.new([2, 3])
     ship_size = 2
+    puts "**********TESTING NOTES***********"
+    puts "Currently testing for user input validation."
+    puts "Enter two adjacent cell names to continue or a non-valid cell name to test error handling."
+    puts "**********************************"
     ship_coordinates = ship_placement.player_selects_ship_placement(blank_gameboard, ship_size)
     assert_instance_of Array, ship_coordinates
     assert_equal ship_size, ship_coordinates.length
@@ -124,9 +129,12 @@ class TestShipPlacement < Minitest::Test
   end
 
   def test_solicit_user_input_return_values
-    skip
     ship_placement = ShipPlacement.new([2, 3])
     ship_size = 2
+    puts "**********TESTING NOTES***********"
+    puts "Currently testing for user input validation."
+    puts "Enter two adjacent cell names to continue."
+    puts "**********************************"
     user_input = ship_placement.solicit_user_input(ship_size)
     assert_equal String, user_input.class
   end
@@ -144,7 +152,6 @@ class TestShipPlacement < Minitest::Test
   end
 
   def test_validate_player_coordinates
-    
     new_gameboard = GenerateNewGameboard.new(4)
     blank_gameboard = new_gameboard.generate_blank_gameboard
     new_gameboard.link_gameboard_cells(blank_gameboard)

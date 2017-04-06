@@ -19,7 +19,6 @@ class TestDisplayBoard < Minitest::Test
     assert_equal ["==========", ". 1 2 3 4 ", "A         ", "B         ", "C         ", "D         ", "=========="], player_one_display_board.current_board
     assert_equal Array, player_one_display_board.current_board.class
     assert_equal 7, player_one_display_board.current_board.length
-
   end
 
   def test_that_update_method_effects_current_board_predictably
@@ -29,10 +28,4 @@ class TestDisplayBoard < Minitest::Test
     player_one_display_board.update("b3", "miss")
     assert_equal ["==========", ". 1 2 3 4 ", "A         ", "B     M   ", "C         ", "D         ", "=========="], player_one_display_board.current_board
   end
-
-  # def test_display_method_prints
-  #   #Not sure how to test this yet.
-  # end
-
-
 end
